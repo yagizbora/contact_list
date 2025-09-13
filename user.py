@@ -31,17 +31,19 @@ def add_contact():
     company_name = entry_company_name.get()
 
     if name and phone:  # name ve phone girdileri boş değilse veri eklemeyi gerçekleştir
-        conn = sqlite3.connect("contact_list.db")
+        conn = sqlite3.connect("contacts.db")
         cursor = conn.cursor()
 
-        # Eğer contactmail veya company_name girdileri boş ise, bunları None olarak atayalım
-        if not contactmail:
-            contactmail = None
+        # Eğer mail veya company_name girdileri boş ise, bunları None olarak atayalım
+        if not mail:
+            mail = None
         if not company_name:
             company_name = None
 
         # SQL sorgusunu parametrelerle hazırlayalım
-        sql_query = "INSERT INTO contact_list (Name, Phone, contactmail, CompanyName) VALUES (?, ?, ?, ?)"
+        sql_query = (
+            "INSERT INTO contacts (Name, Phone, Mail, CompanyName) VALUES (?, ?, ?, ?)"
+        )
         values = (name, phone, mail, company_name)
 
         cursor.execute(sql_query, values)
@@ -139,7 +141,7 @@ contact_list.pack(pady=10)
 
 # root.configure(bg="cyan")
 
-bg = PhotoImage(file="C:/Users/ShadowDefender/Desktop/sql/photos/your_image_2.png")
+bg = PhotoImage(file="background.png")
 canvas1 = tk.Canvas(root, width=1366, height=768)
 canvas1.create_image(0, 0, anchor="nw", image=bg)
 
